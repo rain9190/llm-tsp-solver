@@ -38,4 +38,4 @@ def solve_with_ortools(coords, time_limit_ms=100):
     while not routing.IsEnd(node):
         tour.append(manager.IndexToNode(node))
         node = sol.Value(routing.NextVar(node))
-        return tour
+    return tour
