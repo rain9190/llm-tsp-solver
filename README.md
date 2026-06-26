@@ -10,7 +10,7 @@ and the effect of is studied across 0.5B, 1.5B parameter models and compared to 
 
 - Fine-tuned **Qwen2.5-0.5B** and **Qwen2.5-1.5B** with LoRA + 4-bit quantization on Colab T4 GPU.
 - A **0.5B** model learns the format but systematically drops cities on larger instances (0% feasibility at 14+ cities) — a capacity limit, confirmed because best-of-N sampling doesn't fix it.
-- Scaling to **1.5B** raises feasibility on large instances from **0% -> 97%**, then reward fine-tuning perfects it to **100%**.
+- Scaling to **1.5B** raises feasibility on large instances from **0% to 97%**, then reward fine-tuning perfects it to **100%**.
 - The fine-tuned **1.5B beats a zero-shot 7B general model** (~100% vs ~43% feasibility) despite being ~4.7x smaller — demonstrating that task-specific fine-tuning beats raw scale here.
 - Reward fine-tuning **best-of-8** lowers the optimality gap to ~92%.
 
@@ -55,7 +55,7 @@ Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
 
 1. **A 7B general model, zero-shot, is unreliable**: valid tours occur less than half the time (~43–44%), regardless of instance size. It understands TSP but doesn't satisfy the output format/constraint without fine-tuning.
 2. **Task-specific fine-tuning beats raw scale**: the fine-tuned 1.5B (~100% feasibility) outperforms the 4.7×-larger zero-shot 7B.
-3. **Feasibility is capacity-bound at small scale**: the 0.5B does not produce valid tours at all for 14+ cities. Scaling to 1.5B resolves it (0% -> 97%).
+3. **Feasibility is capacity-bound at small scale**: the 0.5B does not produce valid tours at all for 14+ cities. Scaling to 1.5B resolves it (0% to 97%).
 4. **Reward fine-tuning improves the results**: creates valid tours 100% of the time and improves the optimlaity gap from ~100-148% to 91.8% (26.18% improvement)
 
 ## Repository structure
