@@ -27,18 +27,18 @@ cities there are (*n*−1)!/2 tours. The question this project explores is wheth
 ## Method
 
 1. **Data**: generated random euclidean instances and solved each near-optimally with **Google OR-Tools**. Each instance along with its soluion becomes the training pair.
-2. **SFT** — LoRA-fine-tuned Qwen2.5-0.5B to imitate the teacher's tours (`notebooks/01_sft.ipynb`).
-3. **Scaling** — repeated on Qwen2.5-1.5B to test whether increasing the number of parameters fix the feasibility failure found at the 0.5B parameter model.
-4. **Reward fine-tuning** — sampled N tours per instance, kept the shortest *feasible* one (verifiable reward = tour length), and fine-tuned on those self-generated best tours (`notebooks/02_reward.ipynb`). This is **rejection-sampling fine-tuning (RAFT)**.
-5. **Evaluation** — calculated feasibility rate and optimality gap on the test instances, with the fine tuned models (`notebooks/03_eval.ipynb`), plus a zero-shot 7B baseline (`notebooks/04_baseline_7b.ipynb`).
+2. **SFT**: LoRA-fine-tuned Qwen2.5-0.5B to imitate the teacher's tours (`notebooks/01_sft.ipynb`).
+3. **Scaling**: repeated on Qwen2.5-1.5B to test whether increasing the number of parameters fix the feasibility failure found at the 0.5B parameter model.
+4. **Reward fine-tuning**: sampled N tours per instance, kept the shortest *feasible* one (verifiable reward = tour length), and fine-tuned on those self-generated best tours (`notebooks/02_reward.ipynb`). This is **rejection-sampling fine-tuning (RAFT)**.
+5. **Evaluation**: calculated feasibility rate and optimality gap on the test instances, with the fine tuned models (`notebooks/03_eval.ipynb`), plus a zero-shot 7B baseline (`notebooks/04_baseline_7b.ipynb`).
 
 ## Results
 
 All models are evaluated on the **same held-out test set** (200 Euclidean TSP instances,
 10–20 cities, seeds disjoint from training). Two metrics:
 
-- **Feasibility rate** — fraction of outputs that are valid tours (every city exactly once).
-- **Optimality gap** — over feasible outputs, mean % by which the tour exceeds the OR-Tools optimum.
+- **Feasibility rate**: fraction of outputs that are valid tours (every city exactly once).
+- **Optimality gap**: over feasible outputs, mean % by which the tour exceeds the OR-Tools optimum.
 
 Results are split by instance size (10–13 vs 14–20 cities), which was the key diagnostic.
 Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
