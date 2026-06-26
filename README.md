@@ -47,7 +47,7 @@ Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
 | Qwen2.5-1.5B | SFT | 100% | 101.1% |96.7% | 147.6% |
 
 
-| Model | Training | feasibility (overall) | optimality gap (overall) | 
+| Model (Best) | Training | feasibility (overall) | optimality gap (overall) | 
 |:-------:|:----------:|:---:|:---:|
 | Qwen2.5-1.5B | SFT + RAFT | **100%** | **91.8%** |
 
