@@ -10,22 +10,21 @@ and the effect of is studied across 0.5B, 1.5B parameter models and compared to 
 
 - Fine-tuned **Qwen2.5-0.5B** and **Qwen2.5-1.5B** with LoRA + 4-bit quantization on Colab T4 GPU.
 - A **0.5B** model learns the format but systematically drops cities on larger instances (0% feasibility at 14+ cities) — a capacity limit, confirmed because best-of-N sampling doesn't fix it.
-- Scaling to **1.5B** raises feasibility on large instances from **0% → 97%**, then reward fine-tuning perfects it to **100%**.
-- The fine-tuned **1.5B beats a zero-shot 7B general model** (~100% vs ~43% feasibility) despite being ~4.7× smaller — demonstrating that task-specific fine-tuning beats raw scale here.
-- Inference-time **best-of-8** lowers the optimality gap to ~92%.
+- Scaling to **1.5B** raises feasibility on large instances from **0% -> 97%**, then reward fine-tuning perfects it to **100%**.
+- The fine-tuned **1.5B beats a zero-shot 7B general model** (~100% vs ~43% feasibility) despite being ~4.7x smaller — demonstrating that task-specific fine-tuning beats raw scale here.
+- Reward fine-tuning **best-of-8** lowers the optimality gap to ~92%.
 
 ## The problem
 
-The **Travelling Salesman Problem (TSP)**: given *n* cities, find the shortest closed tour
-visiting each exactly once. It is a NP-hard combinatorial optimization problem — with *n*
-cities there are (*n*−1)!/2 tours. The question this project explores is whether a general language model can be taught to *directly output* a good tour as text, end-to-end.
+The **Travelling Salesman Problem (TSP)**: given *n* cities, find the shortest closed tour visiting each exactly once. It is a NP-hard combinatorial optimization problem — with *n*
+cities there are (*n*−1)!/2 tours. The question this project explores is whether a general language model can be taught to directly output a good tour as text, end-to-end.
 
 ## Method
 
 1. **Data**: generated random euclidean instances and solved each near-optimally with **Google OR-Tools**. Each instance along with its soluion becomes the training pair.
 2. **SFT**: LoRA-fine-tuned Qwen2.5-0.5B to imitate the teacher's tours (`notebooks/01_sft.ipynb`).
 3. **Scaling**: repeated on Qwen2.5-1.5B to test whether increasing the number of parameters fix the feasibility failure found at the 0.5B parameter model.
-4. **Reward fine-tuning**: sampled N tours per instance, kept the shortest *feasible* one (verifiable reward = tour length), and fine-tuned on those self-generated best tours (`notebooks/02_reward.ipynb`). This is **rejection-sampling fine-tuning (RAFT)**.
+4. **Reward fine-tuning**: sampled N tours per instance, kept the shortest feasible one (verifiable reward = tour length), and fine-tuned on those self-generated best tours (`notebooks/02_reward.ipynb`). This is **rejection-sampling fine-tuning (RAFT)**.
 5. **Evaluation**: calculated feasibility rate and optimality gap on the test instances, with the fine tuned models (`notebooks/03_eval.ipynb`), plus a zero-shot 7B baseline (`notebooks/04_baseline_7b.ipynb`).
 
 ## Results
@@ -47,6 +46,7 @@ Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
 | Qwen2.5-0.5B | SFT | 85.7% | 98.9% | **0.0%** | - |
 | Qwen2.5-1.5B | SFT | 100% | 101.1% |96.7% | 147.6% |
 
+|:-------:|:----------:|:---:|:---:|
 | Qwen2.5-1.5B | SFT + RAFT | **100% (overall)** | **91.8% (overall)** |
 
 ### Key findings
