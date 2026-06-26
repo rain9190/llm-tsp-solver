@@ -50,7 +50,6 @@ Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
 | Qwen2.5-7B | **none** | 44.2% | 65.3% |43.1% | 109.6% |
 | Qwen2.5-0.5B | SFT | 85.7% | 98.9% | **0.0%** | - |
 | Qwen2.5-1.5B | SFT | 100% | 101.1% |96.7% | 147.6% |
-| Qwen2.5-1.5B | SFT + reward | **100% (Overall)** | **91.8% (Overall)** |
 
 ### Key findings
 
