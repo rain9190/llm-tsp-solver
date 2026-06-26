@@ -6,8 +6,6 @@ The model reads a list of city coordinates as text and directly creates a tour, 
 on an OR-Tools teacher**, then improved with **reward-based fine-tuning** (RAFT),
 and the effect of is studied across 0.5B, 1.5B parameter models and compared to a 7B parameter zero-shot baseline.
 
----
-
 ## TL;DR
 
 - Fine-tuned **Qwen2.5-0.5B** and **Qwen2.5-1.5B** with LoRA + 4-bit quantization on Colab T4 GPU.
@@ -15,8 +13,6 @@ and the effect of is studied across 0.5B, 1.5B parameter models and compared to 
 - Scaling to **1.5B** raises feasibility on large instances from **0% → 97%**, then reward fine-tuning perfects it to **100%**.
 - The fine-tuned **1.5B beats a zero-shot 7B general model** (~100% vs ~43% feasibility) despite being ~4.7× smaller — demonstrating that task-specific fine-tuning beats raw scale here.
 - Inference-time **best-of-8** lowers the optimality gap to ~92%.
-
----
 
 ## The problem
 
@@ -51,14 +47,14 @@ Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
 | Qwen2.5-0.5B | SFT | 85.7% | 98.9% | **0.0%** | - |
 | Qwen2.5-1.5B | SFT | 100% | 101.1% |96.7% | 147.6% |
 
+| Qwen2.5-1.5B | SFT + RAFT | **100% (overall)** | **91.8% (overall)** |
+
 ### Key findings
 
 1. **A 7B general model, zero-shot, is unreliable**: valid tours occur less than half the time (~43–44%), regardless of instance size. It understands TSP but doesn't satisfy the output format/constraint without fine-tuning.
 2. **Task-specific fine-tuning beats raw scale**: the fine-tuned 1.5B (~100% feasibility) outperforms the 4.7×-larger zero-shot 7B.
 3. **Feasibility is capacity-bound at small scale**: the 0.5B does not produce valid tours at all for 14+ cities. Scaling to 1.5B resolves it (0% -> 97%).
 4. **Reward fine-tuning improves the results**: creates valid tours 100% of the time and improves the optimlaity gap from ~100-148% to 91.8% (26.18% improvement)
-
----
 
 ## Repository structure
 
