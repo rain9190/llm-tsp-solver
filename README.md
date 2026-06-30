@@ -9,14 +9,14 @@ and the effect of is studied across 0.5B, 1.5B parameter models and compared to 
 ## TL;DR
 
 - Fine-tuned **Qwen2.5-0.5B** and **Qwen2.5-1.5B** with LoRA + 4-bit quantization on Colab T4 GPU.
-- A **0.5B** model learns the format but systematically drops cities on larger instances (0% feasibility at 14+ cities) — a capacity limit, confirmed because best-of-N sampling doesn't fix it.
+- A **0.5B** model learns the format but systematically drops cities on larger instances (0% feasibility at 14+ cities) - a capacity limit, confirmed because best-of-N sampling doesn't fix it.
 - Scaling to **1.5B** raises feasibility on large instances from **0% to 97%**, then reward fine-tuning perfects it to **100%**.
-- The fine-tuned **1.5B beats a zero-shot 7B general model** (~100% vs ~43% feasibility) despite being ~4.7x smaller — demonstrating that task-specific fine-tuning beats raw scale here.
+- The fine-tuned **1.5B beats a zero-shot 7B general model** (~100% vs ~43% feasibility) despite being ~4.7x smaller - demonstrating that task-specific fine-tuning beats raw scale here.
 - Reward fine-tuning **best-of-8** lowers the optimality gap to ~92%.
 
 ## The problem
 
-The **Travelling Salesman Problem (TSP)**: given *n* cities, find the shortest closed tour visiting each exactly once. It is a NP-hard combinatorial optimization problem — with *n*
+The **Travelling Salesman Problem (TSP)**: given *n* cities, find the shortest closed tour visiting each exactly once. It is a NP-hard combinatorial optimization problem - with *n*
 cities there are (*n*−1)!/2 tours. The question this project explores is whether a general language model can be taught to directly output a good tour as text, end-to-end.
 
 ## Method
@@ -42,14 +42,14 @@ Reference: optimal = 0% gap; nearest-neighbour heuristic ≈ 15% gap.
 
 | Model | Training | 10–13 feasibility | optimality gap | 14–20 feasibility | optimality gap |
 |:-------:|:----------:|:---:|:---:|:---:|:---:|
-| Qwen2.5-7B | **none** | 44.2% | 65.3% |43.1% | 109.6% |
-| Qwen2.5-0.5B | SFT | 85.7% | 98.9% | **0.0%** | - |
-| Qwen2.5-1.5B | SFT | 100% | 101.1% |96.7% | 147.6% |
+| Qwen2.5-7B | **none** | 44.21% | 65.35% |43.18% | 109.62% |
+| Qwen2.5-0.5B | SFT | 85.71% | 98.92% | **0.0%** | - |
+| Qwen2.5-1.5B | SFT | 100% | 101.15% |96.75% | 147.61% |
 
 
 | Model (Best) | Training | feasibility (overall) | optimality gap (overall) | 
 |:-------:|:----------:|:---:|:---:|
-| Qwen2.5-1.5B | SFT + RAFT | **100%** | **91.8%** |
+| Qwen2.5-1.5B | SFT + RAFT | **100%** | **91.86%** |
 
 ### Key findings
 
